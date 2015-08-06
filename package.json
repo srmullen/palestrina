@@ -1,0 +1,28 @@
+{
+  "name": "palestrina",
+  "version": "1.0.0",
+  "description": "Music Representation",
+  "main": "palestrina.js",
+  "scripts": {
+    "compile": "babel --modules umd src/palestrina.js --out-file dist/palestrina.js -s",
+    "watch": "babel --modules umd src/palestrina.js --watch --out-file dist/palestrina.js -s",
+    "test": "mocha --compilers js:babel/register"
+  },
+  "keywords": [
+    "music",
+    "palestrina",
+    "bach",
+    "leipzig",
+    "note"
+  ],
+  "author": "Sean Mullen",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^3.10.1"
+  },
+  "devDependencies": {
+    "babel": "^5.8.21",
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5"
+  }
+}
