@@ -10,9 +10,6 @@ function maybe (fn) {
 		}
 	}
 }
-/*
- * Functions from Leipzig.melody https://github.com/ctford/leipzig
- */
 
 /*
  * [a] -> [b] -> [c] ->[{type: a, pitch: b, dynamic: c}]

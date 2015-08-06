@@ -5,10 +5,6 @@ import _ from "lodash";
 //     return [note].concat(note.enharmonics());
 // });
 
-/*
- * Functions from Leipzig.scale https://github.com/ctford/leipzig
- */
-
 function sumFrom (series, n) {
     return _.sum(_.map(_.range(n), (i) => series[i % series.length]));
 }
