@@ -1,4 +1,4 @@
-import _ from "lodash";
+let _ = require("../node_modules/lodash/index.js");
 
 // common
 function maybe (fn) {
@@ -89,7 +89,7 @@ function then (later, earlier) {
 
 function mapthen (f, ...melodies) {}
 
-export {
+module.exports = {
 	phrase,
 	accompany,
 	having,
