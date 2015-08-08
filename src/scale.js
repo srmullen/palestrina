@@ -1,14 +1,5 @@
 let _ = require("../node_modules/lodash/index.js");
 
-// let notes = _.map(_.range(128), (n) => {
-//     let note = teoria.note.fromMIDI(n);
-//     return [note].concat(note.enharmonics());
-// });
-
-/*
- * Functions from Leipzig.scale https://github.com/ctford/leipzig
- */
-
 function sumFrom (series, n) {
     return _.sum(_.map(_.range(n), (i) => series[i % series.length]));
 }

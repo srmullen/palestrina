@@ -11,17 +11,25 @@ function maybe (fn) {
 	}
 }
 
+function calculateTimes (phrase) {
+    return _.map(phrase, (note) => {
+        note.time = 0;
+        return note;
+    });
+}
+
 /*
  * [a] -> [b] -> [c] ->[{type: a, pitch: b, dynamic: c}]
  */
 function phrase (durations=[], pitches=[], dynamic=[]) {
-	const ph = new Array(durations.length);
-
-	for (let i = 0; i < durations.length; i++) {
+	// const ph = new Array(durations.length);
+    const ph = new Array(Math.min(durations.length, pitches.length));
+    console.log(ph.length);
+	for (let i = 0; i < ph.length; i++) {
 		ph[i] = {type: durations[i], pitch: pitches[i], dynamic: dynamic[i]};
 	}
 
-	return ph;
+	return calculateTimes(ph);
 }
 
 /*
