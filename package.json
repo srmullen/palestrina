@@ -20,6 +20,7 @@
   "author": "Sean Mullen",
   "license": "MIT",
   "dependencies": {
+    "fraction.js": "^2.5.0",
     "lodash": "^3.10.1"
   },
   "devDependencies": {

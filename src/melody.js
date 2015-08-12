@@ -1,4 +1,5 @@
-let _ = require("../node_modules/lodash/index.js");
+let _ = require("../node_modules/lodash/index.js"),
+    F = require("../node_modules/fraction.js/fraction.js");
 
 // common
 function maybe (fn) {
@@ -11,9 +12,21 @@ function maybe (fn) {
 	}
 }
 
+function concat (a, b) {
+    return a.concat([b]);
+}
+
 function calculateTimes (phrase) {
-    return _.map(phrase, (note) => {
-        note.time = 0;
+    return _.map(_.reduce(phrase, (acc, note) => {
+        let previous = _.last(acc);
+        if (previous) {
+            note.time = new F(1, previous.type).add(previous.time);
+        } else {
+            note.time = 0;
+        }
+        return concat(acc, note);
+    }, []), (note) => {
+        note.time = note.time.valueOf();
         return note;
     });
 }
@@ -24,7 +37,7 @@ function calculateTimes (phrase) {
 function phrase (durations=[], pitches=[], dynamic=[]) {
 	// const ph = new Array(durations.length);
     const ph = new Array(Math.min(durations.length, pitches.length));
-    console.log(ph.length);
+    // console.log(ph.length);
 	for (let i = 0; i < ph.length; i++) {
 		ph[i] = {type: durations[i], pitch: pitches[i], dynamic: dynamic[i]};
 	}

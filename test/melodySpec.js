@@ -95,10 +95,10 @@ describe("melody", () => {
             ]);
 
             expect(melody.where("type",  _.constant(4), phrase)).to.eql([
-                {type: 8, pitch: null, dynamic: undefined, time: 0},
-                {type: 8, pitch: 4, dynamic: undefined, time: 1/8},
-                {type: 8, pitch: null, dynamic: undefined, time: 1/4},
-                {type: 8, pitch: 5, dynamic: undefined, time: 3/8}
+                {type: 4, pitch: null, dynamic: undefined, time: 0},
+                {type: 4, pitch: 4, dynamic: undefined, time: 1/8},
+                {type: 4, pitch: null, dynamic: undefined, time: 1/4},
+                {type: 4, pitch: 5, dynamic: undefined, time: 3/8}
             ]);
         });
     });
