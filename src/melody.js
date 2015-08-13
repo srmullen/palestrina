@@ -32,14 +32,14 @@ function calculateTimes (phrase) {
 }
 
 /*
- * [a] -> [b] -> [c] ->[{duration: a, pitch: b, dynamic: c}]
+ * [a] -> [b] -> [c] ->[{duration: a, pitch: b, velocity: c}]
  */
-function phrase (durations=[], pitches=[], dynamic=[]) {
+function phrase (durations=[], pitches=[], velocity=[]) {
 	// const ph = new Array(durations.length);
     const ph = new Array(Math.min(durations.length, pitches.length));
     // console.log(ph.length);
 	for (let i = 0; i < ph.length; i++) {
-		ph[i] = {duration: durations[i], pitch: pitches[i], dynamic: dynamic[i]};
+		ph[i] = {duration: durations[i], pitch: pitches[i], velocity: velocity[i]};
 	}
 
 	return calculateTimes(ph);
