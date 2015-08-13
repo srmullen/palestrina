@@ -20,7 +20,7 @@ function calculateTimes (phrase) {
     return _.map(_.reduce(phrase, (acc, note) => {
         let previous = _.last(acc);
         if (previous) {
-            note.time = new F(1, previous.type).add(previous.time);
+            note.time = new F(1, previous.duration).add(previous.time);
         } else {
             note.time = 0;
         }
@@ -32,14 +32,14 @@ function calculateTimes (phrase) {
 }
 
 /*
- * [a] -> [b] -> [c] ->[{type: a, pitch: b, dynamic: c}]
+ * [a] -> [b] -> [c] ->[{duration: a, pitch: b, dynamic: c}]
  */
 function phrase (durations=[], pitches=[], dynamic=[]) {
 	// const ph = new Array(durations.length);
     const ph = new Array(Math.min(durations.length, pitches.length));
     // console.log(ph.length);
 	for (let i = 0; i < ph.length; i++) {
-		ph[i] = {type: durations[i], pitch: pitches[i], dynamic: dynamic[i]};
+		ph[i] = {duration: durations[i], pitch: pitches[i], dynamic: dynamic[i]};
 	}
 
 	return calculateTimes(ph);

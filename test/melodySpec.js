@@ -16,11 +16,11 @@ describe("melody", () => {
             expect(melody.phrase([1,2], [1,2,3,4], [1,2,3,4,5]).length).to.equal(2);
         });
 
-        it("should set type, pitch, dynamic, and time", () => {
+        it("should set duration, pitch, dynamic, and time", () => {
             let phrase = melody.phrase([4, 8, 16, 32], ["c4", "d2", "f#5"], ["ff"]);
-            expect(phrase[0]).to.eql({type: 4, pitch: "c4", dynamic: "ff", time: 0});
-            expect(phrase[1]).to.eql({type: 8, pitch: "d2", dynamic: undefined, time: 1/4})
-            expect(phrase[2]).to.eql({type: 16, pitch: "f#5", dynamic: undefined, time: 3/8});
+            expect(phrase[0]).to.eql({duration: 4, pitch: "c4", dynamic: "ff", time: 0});
+            expect(phrase[1]).to.eql({duration: 8, pitch: "d2", dynamic: undefined, time: 1/4})
+            expect(phrase[2]).to.eql({duration: 16, pitch: "f#5", dynamic: undefined, time: 3/8});
             expect(phrase[3]).to.not.be.defined;
         });
 
@@ -37,27 +37,21 @@ describe("melody", () => {
         });
     });
 
-    // describe("after",  {
-    //     it("should exist", () => {
-    //
-    //     });
-    // });
-
     describe("having", () => {
         it("should zip an arbitrary quality on a melody", () => {
             let phrase = melody.phrase([4, 4, 4, 4], [1, 2, 3, 4]);
             expect(melody.having("drum", ["kick", "snare", "kick", "snare"], phrase)).to.eql([
-                {type: 4, pitch: 1, dynamic: undefined, drum: "kick", time: 0},
-                {type: 4, pitch: 2, dynamic: undefined, drum: "snare", time: 1/4},
-                {type: 4, pitch: 3, dynamic: undefined, drum: "kick", time: 2/4},
-                {type: 4, pitch: 4, dynamic: undefined, drum: "snare", time: 3/4}
+                {duration: 4, pitch: 1, dynamic: undefined, drum: "kick", time: 0},
+                {duration: 4, pitch: 2, dynamic: undefined, drum: "snare", time: 1/4},
+                {duration: 4, pitch: 3, dynamic: undefined, drum: "kick", time: 2/4},
+                {duration: 4, pitch: 4, dynamic: undefined, drum: "snare", time: 3/4}
             ]);
 
             expect(melody.having("drum", ["kick", "snare"], phrase)).to.eql([
-                {type: 4, pitch: 1, dynamic: undefined, drum: "kick", time: 0},
-                {type: 4, pitch: 2, dynamic: undefined, drum: "snare", time: 1/4},
-                {type: 4, pitch: 3, dynamic: undefined, drum: undefined, time: 2/4},
-                {type: 4, pitch: 4, dynamic: undefined, drum: undefined, time: 3/4}
+                {duration: 4, pitch: 1, dynamic: undefined, drum: "kick", time: 0},
+                {duration: 4, pitch: 2, dynamic: undefined, drum: "snare", time: 1/4},
+                {duration: 4, pitch: 3, dynamic: undefined, drum: undefined, time: 2/4},
+                {duration: 4, pitch: 4, dynamic: undefined, drum: undefined, time: 3/4}
             ]);
         });
     });
@@ -77,9 +71,9 @@ describe("melody", () => {
         it("Sets a constant value for each note of a melody", () => {
             let phrase = melody.phrase([4,4,4], ["c", "d", "e"]);
             expect(melody.all("part", "lead", phrase)).to.eql([
-                {type: 4, pitch: "c", dynamic: undefined, part: "lead", time: 0},
-                {type: 4, pitch: "d", dynamic: undefined, part: "lead", time: 1/4},
-                {type: 4, pitch: "e", dynamic: undefined, part: "lead", time: 2/4}
+                {duration: 4, pitch: "c", dynamic: undefined, part: "lead", time: 0},
+                {duration: 4, pitch: "d", dynamic: undefined, part: "lead", time: 1/4},
+                {duration: 4, pitch: "e", dynamic: undefined, part: "lead", time: 2/4}
             ]);
         });
     });
@@ -88,17 +82,17 @@ describe("melody", () => {
         it("Applies f to the k key of each note in notes, ignoring missing keys", () => {
             let phrase = melody.phrase([8, 8, 8, 8], [null, 4, null, 5]);
             expect(melody.where("pitch", v => v + 1, phrase)).to.eql([
-                {type: 8, pitch: null, dynamic: undefined, time: 0},
-                {type: 8, pitch: 5, dynamic: undefined, time: 1/8},
-                {type: 8, pitch: null, dynamic: undefined, time: 2/8},
-                {type: 8, pitch: 6, dynamic: undefined, time: 3/8}
+                {duration: 8, pitch: null, dynamic: undefined, time: 0},
+                {duration: 8, pitch: 5, dynamic: undefined, time: 1/8},
+                {duration: 8, pitch: null, dynamic: undefined, time: 2/8},
+                {duration: 8, pitch: 6, dynamic: undefined, time: 3/8}
             ]);
 
-            expect(melody.where("type",  _.constant(4), phrase)).to.eql([
-                {type: 4, pitch: null, dynamic: undefined, time: 0},
-                {type: 4, pitch: 4, dynamic: undefined, time: 1/8},
-                {type: 4, pitch: null, dynamic: undefined, time: 1/4},
-                {type: 4, pitch: 5, dynamic: undefined, time: 3/8}
+            expect(melody.where("duration",  _.constant(4), phrase)).to.eql([
+                {duration: 4, pitch: null, dynamic: undefined, time: 0},
+                {duration: 4, pitch: 4, dynamic: undefined, time: 1/8},
+                {duration: 4, pitch: null, dynamic: undefined, time: 1/4},
+                {duration: 4, pitch: 5, dynamic: undefined, time: 3/8}
             ]);
         });
     });
@@ -110,6 +104,17 @@ describe("melody", () => {
             expect(melody.but(2, 4, variation, phrase)).to.eql(melody.phrase([1,2,1,2,5,6], [1,2,1,2,5,6], ["p", "p", "fff", "fff", "p", "p"]));
         });
     });
+
+    // describe("after", () => {
+    //     it("delays notes for the wait time", () => {
+    //         let phrase = melody.phrase([4, 8, 4], [5, 5, 5]);
+    //         expect(melody.after(2)).to.eql([
+    //             {type: 4, pitch: null, dynamic: undefined, time: 2},
+    //             {type: 8, pitch: 4, dynamic: undefined, time: 17/8},
+    //             {type: 4, pitch: null, dynamic: undefined, time: 9/4}
+    //         ]);
+    //     });
+    // });
 
     describe("times", () => {
         let phrase = melody.phrase([1,2], [1,2]);
