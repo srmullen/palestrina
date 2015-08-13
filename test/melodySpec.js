@@ -17,10 +17,10 @@ describe("melody", () => {
         });
 
         it("should set duration, pitch, velocity, and time", () => {
-            let phrase = melody.phrase([4, 8, 16, 32], ["c4", "d2", "f#5"], ["ff"]);
-            expect(phrase[0]).to.eql({duration: 4, pitch: "c4", velocity: "ff", time: 0});
-            expect(phrase[1]).to.eql({duration: 8, pitch: "d2", velocity: undefined, time: 1/4})
-            expect(phrase[2]).to.eql({duration: 16, pitch: "f#5", velocity: undefined, time: 3/8});
+            let phrase = melody.phrase([1/4, 1/8, 1/16, 1/32], ["c4", "d2", "f#5"], ["ff"]);
+            expect(phrase[0]).to.eql({duration: 1/4, pitch: "c4", velocity: "ff", time: 0});
+            expect(phrase[1]).to.eql({duration: 1/8, pitch: "d2", velocity: undefined, time: 1/4})
+            expect(phrase[2]).to.eql({duration: 1/16, pitch: "f#5", velocity: undefined, time: 3/8});
             expect(phrase[3]).to.not.be.defined;
         });
 
@@ -39,19 +39,19 @@ describe("melody", () => {
 
     describe("having", () => {
         it("should zip an arbitrary quality on a melody", () => {
-            let phrase = melody.phrase([4, 4, 4, 4], [1, 2, 3, 4]);
+            let phrase = melody.phrase([1/4, 1/4, 1/4, 1/4], [1, 2, 3, 4]);
             expect(melody.having("drum", ["kick", "snare", "kick", "snare"], phrase)).to.eql([
-                {duration: 4, pitch: 1, velocity: undefined, drum: "kick", time: 0},
-                {duration: 4, pitch: 2, velocity: undefined, drum: "snare", time: 1/4},
-                {duration: 4, pitch: 3, velocity: undefined, drum: "kick", time: 2/4},
-                {duration: 4, pitch: 4, velocity: undefined, drum: "snare", time: 3/4}
+                {duration: 1/4, pitch: 1, velocity: undefined, drum: "kick", time: 0},
+                {duration: 1/4, pitch: 2, velocity: undefined, drum: "snare", time: 1/4},
+                {duration: 1/4, pitch: 3, velocity: undefined, drum: "kick", time: 2/4},
+                {duration: 1/4, pitch: 4, velocity: undefined, drum: "snare", time: 3/4}
             ]);
 
             expect(melody.having("drum", ["kick", "snare"], phrase)).to.eql([
-                {duration: 4, pitch: 1, velocity: undefined, drum: "kick", time: 0},
-                {duration: 4, pitch: 2, velocity: undefined, drum: "snare", time: 1/4},
-                {duration: 4, pitch: 3, velocity: undefined, drum: undefined, time: 2/4},
-                {duration: 4, pitch: 4, velocity: undefined, drum: undefined, time: 3/4}
+                {duration: 1/4, pitch: 1, velocity: undefined, drum: "kick", time: 0},
+                {duration: 1/4, pitch: 2, velocity: undefined, drum: "snare", time: 1/4},
+                {duration: 1/4, pitch: 3, velocity: undefined, drum: undefined, time: 2/4},
+                {duration: 1/4, pitch: 4, velocity: undefined, drum: undefined, time: 3/4}
             ]);
         });
     });
@@ -69,23 +69,23 @@ describe("melody", () => {
 
     describe("all", () => {
         it("Sets a constant value for each note of a melody", () => {
-            let phrase = melody.phrase([4,4,4], ["c", "d", "e"]);
+            let phrase = melody.phrase([1/4, 1/4, 1/4], ["c", "d", "e"]);
             expect(melody.all("part", "lead", phrase)).to.eql([
-                {duration: 4, pitch: "c", velocity: undefined, part: "lead", time: 0},
-                {duration: 4, pitch: "d", velocity: undefined, part: "lead", time: 1/4},
-                {duration: 4, pitch: "e", velocity: undefined, part: "lead", time: 2/4}
+                {duration: 1/4, pitch: "c", velocity: undefined, part: "lead", time: 0},
+                {duration: 1/4, pitch: "d", velocity: undefined, part: "lead", time: 1/4},
+                {duration: 1/4, pitch: "e", velocity: undefined, part: "lead", time: 2/4}
             ]);
         });
     });
 
     describe("where", () => {
         it("Applies f to the k key of each note in notes, ignoring missing keys", () => {
-            let phrase = melody.phrase([8, 8, 8, 8], [null, 4, null, 5]);
+            let phrase = melody.phrase([1/8, 1/8, 1/8, 1/8], [null, 4, null, 5]);
             expect(melody.where("pitch", v => v + 1, phrase)).to.eql([
-                {duration: 8, pitch: null, velocity: undefined, time: 0},
-                {duration: 8, pitch: 5, velocity: undefined, time: 1/8},
-                {duration: 8, pitch: null, velocity: undefined, time: 2/8},
-                {duration: 8, pitch: 6, velocity: undefined, time: 3/8}
+                {duration: 1/8, pitch: null, velocity: undefined, time: 0},
+                {duration: 1/8, pitch: 5, velocity: undefined, time: 1/8},
+                {duration: 1/8, pitch: null, velocity: undefined, time: 2/8},
+                {duration: 1/8, pitch: 6, velocity: undefined, time: 3/8}
             ]);
 
             expect(melody.where("duration",  _.constant(4), phrase)).to.eql([

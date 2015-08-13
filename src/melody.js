@@ -20,7 +20,7 @@ function calculateTimes (phrase) {
     return _.map(_.reduce(phrase, (acc, note) => {
         let previous = _.last(acc);
         if (previous) {
-            note.time = new F(1, previous.duration).add(previous.time);
+            note.time = new F(previous.duration).add(previous.time);
         } else {
             note.time = 0;
         }
