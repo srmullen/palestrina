@@ -105,16 +105,19 @@ describe("melody", () => {
         });
     });
 
-    // describe("after", () => {
-    //     it("delays notes for the wait time", () => {
-    //         let phrase = melody.phrase([4, 8, 4], [5, 5, 5]);
-    //         expect(melody.after(2)).to.eql([
-    //             {type: 4, pitch: null, dynamic: undefined, time: 2},
-    //             {type: 8, pitch: 4, dynamic: undefined, time: 17/8},
-    //             {type: 4, pitch: null, dynamic: undefined, time: 9/4}
-    //         ]);
-    //     });
-    // });
+    describe("after", () => {
+        it("delays notes for the wait time", () => {
+            expect(melody.after(1/4, melody.phrase([1/8], [60]))).to.eql([
+                {duration: 1/8, pitch: 60, velocity: undefined, time: 1/4}
+            ]);
+
+            expect(melody.after(2, melody.phrase([1/4, 1/8, 1/4], [5, 5, 5]))).to.eql([
+                {duration: 1/4, pitch: 5, velocity: undefined, time: 2},
+                {duration: 1/8, pitch: 5, velocity: undefined, time: 9/4},
+                {duration: 1/4, pitch: 5, velocity: undefined, time: 19/8}
+            ]);
+        });
+    });
 
     describe("times", () => {
         let phrase = melody.phrase([1,2], [1,2]);

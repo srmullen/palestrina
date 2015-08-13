@@ -56,7 +56,13 @@ function accompany (...phrases) {
 
 /* Delay notes by wait */
 // neccessary?
-function after (wait, notes) {}
+function after (wait, notes) {
+    const time = new F(wait);
+    return _.map(notes, (note) => {
+        note.time = time.add(note.time).valueOf();
+        return note;
+    });
+}
 
 /* Zips and arbitrary property onto a melody */
 function having (prop, values, phrase) {
@@ -121,5 +127,6 @@ module.exports = {
 	but,
 	times,
 	then,
-	mapthen
+	mapthen,
+    after
 }
