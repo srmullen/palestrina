@@ -94,18 +94,19 @@ function where (prop, fn, phrase) {
 /* Replaces part of the melody with another */
 function but (start, end, variation, phrase) {
 	let variationObject = _.mapKeys(_.take(variation, end - start), (val, k) => +k + start);
-	return _.assign([], phrase, variationObject);
+	return calculateTimes(_.assign([], phrase, variationObject));
 }
 
 /* Reapeats notes n times */
 function times (n, phrase) {
-	return _.flatten(_.times(n, () => _.map(phrase, _.clone)));
+	return calculateTimes(_.flatten(_.times(n, () => _.map(phrase, _.clone))));
 }
+
+let mapClone = _.partialRight(_.map, _.clone);
 
 /* Sequences later after earlier */
 function then (later, earlier) {
-	let mapClone = _.partialRight(_.map, _.clone);
-	return mapClone(earlier).concat(mapClone(later));
+	return calculateTimes(mapClone(earlier).concat(mapClone(later)));
 }
 
 function mapthen (f, ...melodies) {}
