@@ -172,4 +172,13 @@ describe("melody", () => {
         });
     });
 
+    describe("duration", () => {
+        it("returns the total duration of notes", () => {
+            expect(melody.duration(melody.phrase([1/4], [5]))).to.equal(1/4);
+            expect(melody.duration(melody.phrase([1/8, 1/8], [5, 5]))).to.equal(1/4);
+            expect(melody.duration(melody.phrase([1/16, 1/16, 1/16, 1/16], [5, 5, 5, 5]))).to.equal(1/4);
+            expect(melody.duration(melody.phrase([2, 1, 1/16, 1/16], [5, 5, 5, 5]))).to.equal(25/8);
+        });
+    });
+
 });

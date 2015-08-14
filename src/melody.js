@@ -125,6 +125,10 @@ function bpm (tempo) {
     return (beat) => (beat / tempo) * 60;
 }
 
+function duration (notes) {
+    return _.sum(notes, n => n.duration);
+}
+
 module.exports = {
 	phrase,
 	accompany,
@@ -137,5 +141,6 @@ module.exports = {
 	then,
 	mapthen,
     after,
-    bpm
+    bpm,
+    duration
 }
