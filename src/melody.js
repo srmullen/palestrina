@@ -125,8 +125,18 @@ function bpm (tempo) {
     return (beat) => (beat / tempo) * 60;
 }
 
+/*
+ * Returns the total duration of all the notes.
+ */
 function duration (notes) {
     return _.sum(notes, n => n.duration);
+}
+
+/*
+ * Translates a sequnce of durations into a rhythm.
+ */
+function rhythm (durations=[]) {
+    return phrase(durations, _.times(durations.length, () => null));
 }
 
 module.exports = {
@@ -142,5 +152,6 @@ module.exports = {
 	mapthen,
     after,
     bpm,
-    duration
+    duration,
+    rhythm
 }

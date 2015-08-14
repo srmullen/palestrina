@@ -181,4 +181,10 @@ describe("melody", () => {
         });
     });
 
+    describe("rhythm", () => {
+        it("returns a phrase without pitches", () => {
+            expect(melody.rhythm([1/4, 1/8, 1/4])).to.eql(melody.phrase([1/4, 1/8, 1/4], [null, null, null]));
+        });
+    });
+
 });
