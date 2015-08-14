@@ -3,6 +3,7 @@
 import {expect} from "chai";
 import _ from "lodash";
 import * as melody from "../src/melody";
+import F from "fraction.js";
 
 describe("melody", () => {
     describe("phrase", () => {
@@ -150,6 +151,24 @@ describe("melody", () => {
             expect(qna).to.eql(melody.phrase([1,2,3,4,5,6], [2,3,4,5,6,7]));
             expect(before).to.eql(melody.phrase([1,2,3],[1,2,3]));
             expect(after).to.eql(melody.phrase([4,5,6],[4,5,6]));
+        });
+    });
+
+    describe("bpm", () => {
+        let bpm90 = melody.bpm(90),
+            bpm120 = melody.bpm(120);
+        it("should return a function", () => {
+            expect(melody.bpm()).to.be.a("function");
+        });
+
+        it("should return the correct time in seconds", () => {
+            // Using Fraction to handle rounding errors
+            expect(new F(bpm90(5)).valueOf()).to.equal(new F(10/3).valueOf());
+            expect(bpm120(5)).to.equal(5/2);
+            expect(bpm90(120)).to.equal(80);
+            expect(bpm120(120)).to.equal(60);
+            expect(bpm90(259)).to.equal(518/3);
+            expect(bpm120(259)).to.equal(259/2);
         });
     });
 

@@ -117,6 +117,14 @@ function then (later, earlier) {
 
 function mapthen (f, ...melodies) {}
 
+/*
+ * tempo: Number
+ * Returns a function that translates a beat number into seconds.
+ */
+function bpm (tempo) {
+    return (beat) => (beat / tempo) * 60;
+}
+
 module.exports = {
 	phrase,
 	accompany,
@@ -128,5 +136,6 @@ module.exports = {
 	times,
 	then,
 	mapthen,
-    after
+    after,
+    bpm
 }
