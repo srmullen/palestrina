@@ -187,4 +187,18 @@ describe("melody", () => {
         });
     });
 
+    describe("wherever", () => {
+        it("applies a given function to the note wherever applicable returns true", () => {
+            expect(melody.wherever(n => n.duration === 1/4, "pitch", p => p - 1, melody.phrase([1/4], [60]))).to.eql(melody.phrase([1/4], [59]));
+            expect(melody.wherever(n => n.duration === 1/2, "pitch", p => p - 1, melody.phrase([1/4], [60]))).to.eql(melody.phrase([1/4], [60]));
+            expect(melody.wherever(n => n.pitch, "part", melody.is("piano"), melody.phrase([1/4, 1/4, 1/4, 1/4], ["Ab", null, "B#", null])))
+                .to.eql([
+                    {duration: 1/4, time: 0, part: "piano", pitch: "Ab", velocity: undefined},
+                    {duration: 1/4, time: 1/4, pitch: null, velocity: undefined},
+                    {duration: 1/4, time: 2/4, part: "piano", pitch: "B#", velocity: undefined},
+                    {duration: 1/4, time: 3/4, pitch: null, velocity: undefined}
+                ]);
+        });
+    });
+
 });

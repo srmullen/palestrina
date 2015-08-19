@@ -97,6 +97,16 @@ function where (prop, fn, phrase) {
 	});
 }
 
+function wherever (applicable, k, f, notes) {
+    return _.map(notes, (note) => {
+        let n = _.clone(note);
+        if (applicable(n)) {
+            n[k] = f(n[k]);
+        }
+        return n;
+    });
+}
+
 /* Replaces part of the melody with another */
 function but (start, end, variation, phrase) {
 	let variationObject = _.mapKeys(_.take(variation, end - start), (val, k) => +k + start);
@@ -146,6 +156,7 @@ module.exports = {
 	is,
 	all,
 	where,
+    wherever,
 	but,
 	times,
 	then,
