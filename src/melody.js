@@ -166,4 +166,6 @@ module.exports = {
     bpm,
     duration,
     rhythm
+    // tempo,
+    // accelerando
 }
