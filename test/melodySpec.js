@@ -32,9 +32,18 @@ describe("melody", () => {
 
     describe("accompany", () => {
         it("should return an array with length of the given arguments", () => {
-            expect(melody.accompany().length).to.equal(0);
-            expect(melody.accompany([]).length).to.equal(1);
-            expect(melody.accompany([], [], [], [], []).length).to.equal(5);
+            let mel = melody.accompany(melody.phrase([2, 2, 2, 2], [1, 1, 1, 1]), melody.phrase([3, 3, 3, 3], [2, 2, 2, 2]));
+            expect(mel.length).to.equal(8);
+            expect(mel).to.eql([
+                {duration: 2, pitch: 1, time: 0, velocity: undefined},
+                {duration: 3, pitch: 2, time: 0, velocity: undefined},
+                {duration: 2, pitch: 1, time: 2, velocity: undefined},
+                {duration: 3, pitch: 2, time: 3, velocity: undefined},
+                {duration: 2, pitch: 1, time: 4, velocity: undefined},
+                {duration: 2, pitch: 1, time: 6, velocity: undefined},
+                {duration: 3, pitch: 2, time: 6, velocity: undefined},
+                {duration: 3, pitch: 2, time: 9, velocity: undefined}
+            ]);
         });
     });
 

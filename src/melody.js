@@ -49,9 +49,8 @@ function phrase (durations=[], pitches=[], velocity=[]) {
  * ...[{time}] -> [...{time}]
  * Same as Leipzig.with
  */
-// neccessary?
 function accompany (...phrases) {
-	return phrases;
+	return _.sortBy(_.flatten(phrases), n => n.time);
 }
 
 /* Delay notes by wait */
@@ -125,7 +124,9 @@ function then (later, earlier) {
 	return calculateTimes(mapClone(earlier).concat(mapClone(later)));
 }
 
-function mapthen (f, ...melodies) {}
+function mapthen (f, ...melodies) {
+
+}
 
 /*
  * tempo: Number
