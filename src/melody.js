@@ -1,5 +1,5 @@
-let _ = require("../node_modules/lodash/index.js"),
-    F = require("../node_modules/fraction.js/fraction.js");
+let _ = require("lodash"),
+    F = require("fraction.js");
 
 // common
 function maybe (fn) {

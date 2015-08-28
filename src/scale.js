@@ -1,4 +1,4 @@
-let _ = require("../node_modules/lodash/index.js");
+let _ = require("lodash");
 
 function sumFrom (series, n) {
     return _.sum(_.map(_.range(n), (i) => series[i % series.length]));
