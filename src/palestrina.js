@@ -1,5 +1,7 @@
-const scale = require("./scale"),
-      melody = require("./melody");
+"use strict";
+
+import scale from "./scale";
+import melody from "./melody";
 
 if (typeof module === "object") {
     module.exports = {scale, melody};

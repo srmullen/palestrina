@@ -1,5 +1,7 @@
-let _ = require("lodash"),
-    F = require("fraction.js");
+"use strict";
+
+import _ from "lodash";
+import F from "fraction.js";
 
 // common
 function maybe (fn) {

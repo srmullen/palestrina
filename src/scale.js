@@ -1,4 +1,6 @@
-let _ = require("lodash");
+"use strict";
+
+import _ from "lodash";
 
 function sumFrom (series, n) {
     return _.sum(_.map(_.range(n), (i) => series[i % series.length]));
