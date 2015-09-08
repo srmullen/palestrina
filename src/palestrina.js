@@ -1,7 +1,7 @@
 "use strict";
 
-import scale from "./scale";
-import melody from "./melody";
+import * as scale from "./scale";
+import * as melody from "./melody";
 
 if (typeof module === "object") {
     module.exports = {scale, melody};

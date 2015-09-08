@@ -66,7 +66,7 @@ let C = translation(60),
     sharp = translation(1),
     flat = translation(-1);
 
-module.exports = {
+export {
     major,
     minor,
     flat,

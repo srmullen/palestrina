@@ -152,7 +152,7 @@ function rhythm (durations=[]) {
     return phrase(durations, _.times(durations.length, () => null));
 }
 
-module.exports = {
+export {
 	phrase,
 	accompany,
 	having,
