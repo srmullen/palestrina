@@ -104,4 +104,32 @@ describe("scale", () => {
             expect(scale.flat(60)).to.equal(59);
         });
     });
+
+    describe("low", () => {
+        it("should translate the midi note down an octave", () => {
+            expect(scale.low(69)).to.equal(57);
+            expect(scale.low(60)).to.equal(48);
+        });
+    });
+
+    describe("high", () => {
+        it("should translate the midi note up an octave", () => {
+            expect(scale.high(69)).to.equal(81);
+            expect(scale.high(60)).to.equal(72);
+        });
+    });
+
+    describe("lower", () => {
+        it("should translate the scale degree down an octave", () => {
+            expect(scale.lower(69)).to.equal(62);
+            expect(scale.lower(60)).to.equal(53);
+        });
+    });
+
+    describe("raise", () => {
+        it("should translate the scale degree up an octave", () => {
+            expect(scale.raise(69)).to.equal(76);
+            expect(scale.raise(60)).to.equal(67);
+        });
+    });
 });

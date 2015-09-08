@@ -24,6 +24,38 @@ function translation (n) {
     return v => n + v;
 }
 
+function from (base) {
+    return (root) => root + base;
+}
+
+/*
+ * Lower midi one octave.
+ */
+function low (midi) {
+    return from(-12)(midi);
+}
+
+/*
+ * Raise midi one octave.
+ */
+function high (midi) {
+    return from(12)(midi);
+}
+
+/*
+ * Lower degree one octave (assuming heptatonic scale).
+ */
+function lower (degree) {
+    return from(-7)(degree);
+}
+
+/*
+ * Raise degree one octave (assuming heptatonic scale).
+ */
+function raise (degree) {
+    return from(7)(degree);
+}
+
 let C = translation(60),
     D = translation(62),
     E = translation(64),
@@ -40,5 +72,6 @@ module.exports = {
     flat,
     sharp,
     ionian, dorian, phrygian, lydian, mixolydian, aeolian, locrian,
-    C, D, E, F, G, A, B
+    C, D, E, F, G, A, B,
+    from, low, high, lower, raise
 }
