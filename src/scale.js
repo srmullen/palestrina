@@ -10,15 +10,19 @@ function create (scale) {
     return _.partial(sumFrom, scale);
 }
 
- let ionian = create([2,2,1,2,2,2,1]),
-     dorian = create([2,1,2,2,2,1,2]),
-     phrygian = create([1,2,2,2,1,2,2]),
-     lydian = create([2,2,2,1,2,2,1]),
-     mixolydian = create([2,2,1,2,2,1,2]),
-     aeolian = create([2,1,2,2,1,2,2]),
-     locrian = create([1,2,2,1,2,2,2]),
-     major = ionian,
-     minor = aeolian;
+function mode (scale, n) {
+    return _.compose((x) => x - scale(n), scale, from(n));
+}
+
+let major = create([2,2,1,2,2,2,1]),
+    minor = create([2,1,2,2,1,2,2]),
+    ionian = mode(major, 0),
+    dorian = mode(major, 1),
+    phrygian = mode(major, 2),
+    lydian = mode(major, 3),
+    mixolydian = mode(major, 4),
+    aeolian = mode(major, 5),
+    locrian = mode(major, 6);
 
 function translation (n) {
     return v => n + v;
@@ -69,6 +73,7 @@ let C = translation(60),
 export {
     major,
     minor,
+    mode,
     flat,
     sharp,
     ionian, dorian, phrygian, lydian, mixolydian, aeolian, locrian,

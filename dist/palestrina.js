@@ -13073,6 +13073,60 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _lodash = require("lodash");
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _scale = require("./scale");
+
+var triad = { i: 0, iii: 2, v: 4 };
+var seventh = { i: 0, iii: 2, v: 4, vii: 6 };
+var ninth = { i: 0, iii: 2, v: 4, vii: 6, ix: 8 };
+var eleventh = { i: 0, iii: 2, v: 4, vii: 6, ix: 8, xi: 10 };
+var thirteenth = { i: 0, iii: 2, v: 4, vii: 6, ix: 8, xi: 10, xiii: 12 };
+
+function root(chord, tonic) {
+    var rootChord = {},
+        fromTonic = (0, _scale.from)(tonic);
+    _lodash2["default"].each(chord, function (v, k) {
+        rootChord[k] = fromTonic(v);
+    });
+    return rootChord;
+}
+
+function inversion(chord, n) {
+    var stable = _lodash2["default"].take(_lodash2["default"].keys(triad), n),
+        lowered = _lodash2["default"].difference(_lodash2["default"].keys(chord), stable);
+
+    var invertedChord = {};
+    _lodash2["default"].each(stable, function (k) {
+        invertedChord[k] = chord[k];
+    });
+
+    _lodash2["default"].each(lowered, function (k) {
+        invertedChord[k] = (0, _scale.lower)(chord[k]);
+    });
+
+    return invertedChord;
+}
+
+exports.triad = triad;
+exports.seventh = seventh;
+exports.ninth = ninth;
+exports.eleventh = eleventh;
+exports.thirteenth = thirteenth;
+exports.root = root;
+exports.inversion = inversion;
+
+},{"./scale":6,"lodash":2}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
@@ -13276,27 +13330,7 @@ exports.rhythm
 // accelerando
  = rhythm;
 
-// module.exports = {
-// 	phrase,
-// 	accompany,
-// 	having,
-// 	is,
-// 	all,
-// 	where,
-//     wherever,
-// 	but,
-// 	times,
-// 	then,
-// 	mapthen,
-//     after,
-//     bpm,
-//     duration,
-//     rhythm
-//     // tempo,
-//     // accelerando
-// }
-
-},{"fraction.js":1,"lodash":2}],4:[function(require,module,exports){
+},{"fraction.js":1,"lodash":2}],5:[function(require,module,exports){
 "use strict";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj["default"] = obj; return newObj; } }
@@ -13309,15 +13343,19 @@ var _melody = require("./melody");
 
 var melody = _interopRequireWildcard(_melody);
 
+var _chord = require("./chord");
+
+var chord = _interopRequireWildcard(_chord);
+
 if (typeof module === "object") {
-  module.exports = { scale: scale, melody: melody };
+  module.exports = { scale: scale, melody: melody, chord: chord };
 }
 
 if (typeof window === "object") {
-  window.palestrina = { scale: scale, melody: melody };
+  window.palestrina = { scale: scale, melody: melody, chord: chord };
 }
 
-},{"./melody":3,"./scale":5}],5:[function(require,module,exports){
+},{"./chord":3,"./melody":4,"./scale":6}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13340,15 +13378,21 @@ function create(scale) {
     return _lodash2["default"].partial(sumFrom, scale);
 }
 
-var ionian = create([2, 2, 1, 2, 2, 2, 1]),
-    dorian = create([2, 1, 2, 2, 2, 1, 2]),
-    phrygian = create([1, 2, 2, 2, 1, 2, 2]),
-    lydian = create([2, 2, 2, 1, 2, 2, 1]),
-    mixolydian = create([2, 2, 1, 2, 2, 1, 2]),
-    aeolian = create([2, 1, 2, 2, 1, 2, 2]),
-    locrian = create([1, 2, 2, 1, 2, 2, 2]),
-    major = ionian,
-    minor = aeolian;
+function mode(scale, n) {
+    return _lodash2["default"].compose(function (x) {
+        return x - scale(n);
+    }, scale, from(n));
+}
+
+var major = create([2, 2, 1, 2, 2, 2, 1]),
+    minor = create([2, 1, 2, 2, 1, 2, 2]),
+    ionian = mode(major, 0),
+    dorian = mode(major, 1),
+    phrygian = mode(major, 2),
+    lydian = mode(major, 3),
+    mixolydian = mode(major, 4),
+    aeolian = mode(major, 5),
+    locrian = mode(major, 6);
 
 function translation(n) {
     return function (v) {
@@ -13402,6 +13446,7 @@ var C = translation(60),
 
 exports.major = major;
 exports.minor = minor;
+exports.mode = mode;
 exports.flat = flat;
 exports.sharp = sharp;
 exports.ionian = ionian;
@@ -13424,14 +13469,4 @@ exports.high = high;
 exports.lower = lower;
 exports.raise = raise;
 
-// module.exports = {
-//     major,
-//     minor,
-//     flat,
-//     sharp,
-//     ionian, dorian, phrygian, lydian, mixolydian, aeolian, locrian,
-//     C, D, E, F, G, A, B,
-//     from, low, high, lower, raise
-// }
-
-},{"lodash":2}]},{},[4]);
+},{"lodash":2}]},{},[5]);

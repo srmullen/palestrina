@@ -5,6 +5,7 @@ import _ from "lodash";
 import * as scale from "../src/scale";
 
 describe("scale", () => {
+
     describe("ionian/major", () => {
         it("should map scale degrees to chromatic degrees", function () {
             expect(_.map(_.range(16), scale.major)).to.eql([0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24, 26]);
