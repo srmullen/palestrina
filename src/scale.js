@@ -2,15 +2,33 @@
 
 import _ from "lodash";
 
+// because Array.prototype.reverse mutates the array
+function reverse (array) {
+    return _.reduceRight(array, (acc, n) => {
+        acc.push(n);
+        return acc;
+    }, []);
+}
+
 function sumFrom (series, n) {
-    return _.sum(_.map(_.range(n), (i) => series[i % series.length]));
+    if (Math.floor(n) !== n) {
+        let lower = sumFrom(series, Math.floor(n)),
+            upper = sumFrom(series, Math.ceil(n)),
+            fraction = n - Math.floor(n);
+        return lower + (fraction * (upper - lower));
+    } else if (n < 0) {
+        let rseries = _.map(reverse(series), n => 0 - n);
+        return _.sum(_.map(_.range(Math.abs(n)), (i) => rseries[i % rseries.length]));
+    } else if (n >= 0) {
+        return _.sum(_.map(_.range(n), (i) => series[i % series.length]));
+    }
 }
 
 function create (scale) {
     return _.partial(sumFrom, scale);
 }
 
-function mode (scale, n) {
+function mode (scale, n, scaleLenth=7) {
     return _.compose((x) => x - scale(n), scale, from(n));
 }
 
@@ -23,10 +41,6 @@ let major = create([2,2,1,2,2,2,1]),
     mixolydian = mode(major, 4),
     aeolian = mode(major, 5),
     locrian = mode(major, 6);
-
-function translation (n) {
-    return v => n + v;
-}
 
 function from (base) {
     return (root) => root + base;
@@ -60,15 +74,15 @@ function raise (degree) {
     return from(7)(degree);
 }
 
-let C = translation(60),
-    D = translation(62),
-    E = translation(64),
-    F = translation(65),
-    G = translation(67),
-    A = translation(69),
-    B = translation(71),
-    sharp = translation(1),
-    flat = translation(-1);
+let C = from(60),
+    D = from(62),
+    E = from(64),
+    F = from(65),
+    G = from(67),
+    A = from(69),
+    B = from(71),
+    sharp = from(1),
+    flat = from(-1);
 
 export {
     major,

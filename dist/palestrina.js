@@ -13368,10 +13368,38 @@ var _lodash = require("lodash");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
+// because Array.prototype.reverse mutates the array
+function reverse(array) {
+    return _lodash2["default"].reduceRight(array, function (acc, n) {
+        acc.push(n);
+        return acc;
+    }, []);
+}
+
 function sumFrom(series, n) {
-    return _lodash2["default"].sum(_lodash2["default"].map(_lodash2["default"].range(n), function (i) {
-        return series[i % series.length];
-    }));
+    if (Math.floor(n) !== n) {
+        var _lower = sumFrom(series, Math.floor(n)),
+            upper = sumFrom(series, Math.ceil(n)),
+            fraction = n - Math.floor(n);
+        return _lower + fraction * (upper - _lower);
+    } else if (n < 0) {
+        var _ret = (function () {
+            var rseries = _lodash2["default"].map(reverse(series), function (n) {
+                return 0 - n;
+            });
+            return {
+                v: _lodash2["default"].sum(_lodash2["default"].map(_lodash2["default"].range(Math.abs(n)), function (i) {
+                    return rseries[i % rseries.length];
+                }))
+            };
+        })();
+
+        if (typeof _ret === "object") return _ret.v;
+    } else if (n >= 0) {
+        return _lodash2["default"].sum(_lodash2["default"].map(_lodash2["default"].range(n), function (i) {
+            return series[i % series.length];
+        }));
+    }
 }
 
 function create(scale) {
@@ -13379,6 +13407,8 @@ function create(scale) {
 }
 
 function mode(scale, n) {
+    var scaleLenth = arguments.length <= 2 || arguments[2] === undefined ? 7 : arguments[2];
+
     return _lodash2["default"].compose(function (x) {
         return x - scale(n);
     }, scale, from(n));
@@ -13393,12 +13423,6 @@ var major = create([2, 2, 1, 2, 2, 2, 1]),
     mixolydian = mode(major, 4),
     aeolian = mode(major, 5),
     locrian = mode(major, 6);
-
-function translation(n) {
-    return function (v) {
-        return n + v;
-    };
-}
 
 function from(base) {
     return function (root) {
@@ -13434,15 +13458,15 @@ function raise(degree) {
     return from(7)(degree);
 }
 
-var C = translation(60),
-    D = translation(62),
-    E = translation(64),
-    F = translation(65),
-    G = translation(67),
-    A = translation(69),
-    B = translation(71),
-    sharp = translation(1),
-    flat = translation(-1);
+var C = from(60),
+    D = from(62),
+    E = from(64),
+    F = from(65),
+    G = from(67),
+    A = from(69),
+    B = from(71),
+    sharp = from(1),
+    flat = from(-1);
 
 exports.major = major;
 exports.minor = minor;
