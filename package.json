@@ -2,7 +2,7 @@
   "name": "palestrina.js",
   "version": "1.2.1",
   "description": "Music Representation",
-  "main": "lib/palestrina.js",
+  "main": "src/palestrina.js",
   "scripts": {
     "watchify": "watchify src/palestrina.js -t [babelify --blacklist regenerator] -o dist/palestrina.js -v -d",
     "build": "browserify src/palestrina.js -t babelify --outfile dist/palestrina.js",
