@@ -10,13 +10,31 @@
     <script type="text/javascript" src="dist/palestrina.js"></script>
 
     <script type="text/javascript">
-        function negative (n) {
-            return 0 - n;
-        }
-        
         var melody = palestrina.melody,
             scale = palestrina.scale,
-            chord = palestrina.chord;
+            chord = palestrina.chord,
+            live = palestrina.live;
+
+        var ctx = new AudioContext(),
+            gain = ctx.createGain();
+
+        gain.gain.value = 0.5;
+        gain.connect(ctx.destination);
+
+        var sinOsc = function (note) {
+            var osc = ctx.createOscillator();
+
+            osc.frequency.value = note.pitch;
+
+            osc.connect(gain);
+
+            var time = note.time || 0,
+                startTime = ctx.currentTime + time;
+
+            osc.start(startTime);
+
+            osc.stop(startTime + note.duration);
+        }
     </script>
 </body>
 </html>

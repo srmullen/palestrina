@@ -135,7 +135,10 @@ function mapthen (f, ...melodies) {
  * Returns a function that translates a beat number into seconds.
  */
 function bpm (tempo) {
-    return (beat) => (beat / tempo) * 60;
+    return (beat) => {
+		let time = new F(beat, tempo);
+		return time.mul(60).valueOf();
+	}
 }
 
 /*
@@ -150,6 +153,38 @@ function duration (notes) {
  */
 function rhythm (durations=[]) {
     return phrase(durations, _.times(durations.length, () => null));
+}
+
+/*
+ * Transforms both time and duration according to timing.
+ */
+function tempo (timing, notes) {
+	return where("time", timing, notes.map((note) => {
+		let clone = _.clone(note);
+		clone.duration = timing(note.time + note.duration) - timing(note.time);
+		return clone;
+	}));
+}
+
+/*
+ *
+ */
+function accelerando (from, to, by) {
+	function rate (t) {
+		if (from >= t) {
+			return t;
+		} else if (to >= t) {
+			let duration = to - from,
+				position = t - from,
+				completion = position / duration,
+				extent = by - 1,
+				extra = position * (1/2) * completion * extent;
+			return t + extra;
+		} else {
+			return rate(to) + (by * (t - 2));
+		}
+	}
+	return rate;
 }
 
 export {
@@ -167,7 +202,7 @@ export {
     after,
     bpm,
     duration,
-    rhythm
-    // tempo,
-    // accelerando
+    rhythm,
+    tempo,
+    accelerando
 }

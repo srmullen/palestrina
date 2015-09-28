@@ -210,4 +210,32 @@ describe("melody", () => {
         });
     });
 
+    describe("tempo", () => {
+        it("transforms both the time and duration according to the given timing", () => {
+            let phrase = melody.phrase([1, 1/2, 1/4, 1/8, 1/16], [1,2,3,4,5]);
+            expect(melody.tempo(melody.bpm(120), phrase)).to.eql([
+                {pitch: 1, time: 0, duration: 1/2, velocity: undefined},
+                {pitch: 2, time: 1/2, duration: 1/4, velocity: undefined},
+                {pitch: 3, time: 3/4, duration: 1/8, velocity: undefined},
+                {pitch: 4, time: 7/8, duration: 1/16, velocity: undefined},
+                {pitch: 5, time: 15/16, duration: 1/32, velocity: undefined}
+            ]);
+            expect(phrase).to.eql(melody.phrase([1, 1/2, 1/4, 1/8, 1/16], [1,2,3,4,5]));
+        });
+    });
+
+    describe("accelerando", () => {
+        it("returns a function that linearly interpolates the phrase between from and to", () => {
+            let phrase = melody.phrase([1, 1/2, 1/4, 1/8, 1/16], [1,2,3,4,5]);
+            expect(melody.tempo(melody.accelerando(0, 4, 3/2), phrase)).to.eql([
+                {pitch: 1, time: 0, duration: 17/16, velocity: undefined},
+                {pitch: 2, time: 17/16, duration: 37/64, velocity: undefined},
+                {pitch: 3, time: 105/64, duration: 77/256, velocity: undefined},
+                {pitch: 4, time: 497/256, duration: 157/1024, velocity: undefined},
+                {pitch: 5, time: 2145/1024, duration: 317/4096, velocity: undefined},
+            ]);
+            expect(phrase).to.eql(melody.phrase([1, 1/2, 1/4, 1/8, 1/16], [1,2,3,4,5]));
+        });
+    });
+
 });
