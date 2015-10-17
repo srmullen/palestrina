@@ -1,3 +1,4 @@
+"format es6";
 import _ from "lodash";
 import F from "fraction.js";
 

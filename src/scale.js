@@ -1,3 +1,4 @@
+"format es6";
 import _ from "lodash";
 
 // because Array.prototype.reverse mutates the array
