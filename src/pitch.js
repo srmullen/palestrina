@@ -56,13 +56,12 @@ export function noteToMidi (note) {
         const interval = NOTES[note.pitchClass];
         return octaveNoteToMidi(note.octave, interval);
     }
-    // return noteInfo(note).midi;
 }
 
-function midiToHz (midi) {
+export function midiToHz (midi) {
     return Math.pow(2, (midi - 69) / 12) * 440;
 }
 
-function noteToHz (note) {
-    return midiToHz(noteInfo(note).midi);
+export function noteToHz (note) {
+    return midiToHz(noteToMidi(note));
 }

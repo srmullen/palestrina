@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {parsePitch, noteToMidi} from "../src/pitch";
+import {parsePitch, noteToMidi, midiToHz, noteToHz} from "../src/pitch";
 
 describe("pitch", () => {
     describe("parsePitch", () => {
@@ -55,6 +55,29 @@ describe("pitch", () => {
             expect(noteToMidi("C#0")).to.equal(13);
             expect(noteToMidi("db0")).to.equal(13);
             expect(noteToMidi("a4")).to.equal(69);
+        });
+    });
+
+    describe("midiToHz", () => {
+        it("should convert midi numbers to cycles per second", () => {
+            expect(midiToHz(45)).to.equal(110);
+            expect(midiToHz(69)).to.equal(440);
+            expect(midiToHz(34)).to.equal(58.27047018976124);
+            expect(midiToHz(76.5)).to.equal(678.5727631794939);
+        });
+    });
+
+    describe("noteToHz", () => {
+        it("should convert note objects to cycles per second", () => {
+            expect(noteToHz({pitchClass: "a", octave: 4})).to.equal(440);
+            expect(noteToHz({pitchClass: "C#", octave: 8})).to.equal(4434.922095629953);
+            expect(noteToHz({pitchClass: "gb", octave: 3})).to.equal(184.9972113558172);
+        });
+
+        it("should convert note strings to cycles per second", () => {
+            expect(noteToHz("a4")).to.equal(440);
+            expect(noteToHz("C#8")).to.equal(4434.922095629953);
+            expect(noteToHz("gb3")).to.equal(184.9972113558172);
         });
     });
 });
