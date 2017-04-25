@@ -13,3 +13,8 @@ Build
     `npm run-script es6compile`
 
 2. Standalone - not complete.
+
+TODO
+----
+- Note representation conversion (name -> midi -> freq)
+- webpack build
