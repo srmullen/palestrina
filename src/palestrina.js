@@ -6,4 +6,4 @@ import * as chord from "./chord";
 import * as pitch from "./pitch";
 import * as live from "./live";
 
-export {scale, melody, chord, live};
+export {scale, melody, chord, live, pitch};
