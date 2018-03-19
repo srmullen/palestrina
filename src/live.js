@@ -1,4 +1,3 @@
-"format es6";
 const instruments = {};
 
 /*

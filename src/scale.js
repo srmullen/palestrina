@@ -1,5 +1,4 @@
-"format es6";
-import _ from "lodash";
+import * as _ from "lodash";
 
 // because Array.prototype.reverse mutates the array
 function reverse (array) {
@@ -28,7 +27,7 @@ function create (scale) {
 }
 
 function mode (scale, n, scaleLenth=7) {
-    return _.compose((x) => x - scale(n), scale, from(n));
+    return _.flowRight((x) => x - scale(n), scale, from(n));
 }
 
 let major = create([2,2,1,2,2,2,1]),

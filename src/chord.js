@@ -1,5 +1,4 @@
-"format es6";
-import _ from "lodash";
+import * as _ from "lodash";
 import {from, lower} from "./scale";
 
 const triad = {i: 0, iii: 2, v: 4};

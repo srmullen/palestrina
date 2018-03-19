@@ -1,5 +1,4 @@
-"format es6";
-import _ from "lodash";
+import * as _ from "lodash";
 import F from "fraction.js";
 
 // common
@@ -144,7 +143,7 @@ function bpm (tempo) {
  * Returns the total duration of all the notes.
  */
 function duration (notes) {
-    return _.sum(notes, n => n.duration);
+    return _.sumBy(notes, n => n.duration);
 }
 
 /*
